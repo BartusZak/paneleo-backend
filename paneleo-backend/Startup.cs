@@ -13,8 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using paneleo.BL.Services;
 using paneleo.BL.Services.Interfaces;
+using Swashbuckle.AspNetCore.Swagger;
 
-namespace paneleo_backend
+namespace paneleo.WebApi
 {
     public class Startup
     {
@@ -34,6 +35,12 @@ namespace paneleo_backend
 
             services.AddMvc();
             services.AddScoped<IAccountService, AccountService>();
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Paneleo API", Version = "v1" });
+            });
 
         }
 
@@ -55,6 +62,18 @@ namespace paneleo_backend
                 .AllowAnyHeader()
                 .AllowCredentials());
             //app.UseHttpsRedirection();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Paneleo API V1");
+                c.RoutePrefix = string.Empty;
+            });
+
             app.UseMvc();
 
         }

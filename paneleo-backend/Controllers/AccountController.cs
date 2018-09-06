@@ -22,18 +22,18 @@ namespace paneleo.WebApi.Controllers
             _accountService = accountService;
         }
 
-        //[HttpPost("Login")]
-        //public async Task<IActionResult> Login([FromBody] LoginBindingModel loginModel)
-        //{
-        //    var result = await _accountService.Login(loginModel);
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginBindingModel loginModel)
+        {
+            var result = await _accountService.Login(loginModel);
 
-        //    if (result.ErrorOccurred)
-        //    {
-        //        return BadRequest(result);
-        //    }
+            if (result.ErrorOccurred)
+            {
+                return BadRequest(result);
+            }
 
-        //    return Ok(result);
-        //}
+            return Ok(result);
+        }
 
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterBindingModel registerModel)
