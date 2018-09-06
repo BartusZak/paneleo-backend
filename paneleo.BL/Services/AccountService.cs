@@ -14,11 +14,9 @@ namespace paneleo.BL.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly UserManager<User> _userManager;
 
-        public AccountService(UserManager<User> userManager)
+        public AccountService()
         {
-            _userManager = userManager;
         }
 
         public async Task<Response<RegisterDto>> Login(LoginBindingModel loginModel)
