@@ -12,4 +12,9 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\paneleo.BL\paneleo.BL.csproj" />
+    <ProjectReference Include="..\Share\paneleo.Share.csproj" />
+  </ItemGroup>
+
 </Project>
