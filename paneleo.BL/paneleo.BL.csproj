@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Share\paneleo.Share.csproj" />
+    <ProjectReference Include="..\paneleo.Data\paneleo.Data.csproj" />
+    <ProjectReference Include="..\paneleo.Share\paneleo.Share.csproj" />
   </ItemGroup>
 
   <ItemGroup>

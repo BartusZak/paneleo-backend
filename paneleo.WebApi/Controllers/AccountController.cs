@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using paneleo.BL.Services.Interfaces;
-using paneleo.Share.BindingModels.Account;
-using paneleo.Share.ModelsDto;
+using paneleo.Share.BindingModels;
 
 namespace paneleo.WebApi.Controllers
 {

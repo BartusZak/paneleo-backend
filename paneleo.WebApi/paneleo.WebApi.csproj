@@ -11,11 +11,15 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
+
+	  
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\paneleo.BL\paneleo.BL.csproj" />
-    <ProjectReference Include="..\Share\paneleo.Share.csproj" />
+    <ProjectReference Include="..\paneleo.Data\paneleo.Data.csproj" />
+    <ProjectReference Include="..\paneleo.Share\paneleo.Share.csproj" />
+
   </ItemGroup>
 
 </Project>

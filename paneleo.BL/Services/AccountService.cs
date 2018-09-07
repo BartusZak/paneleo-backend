@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using System.Threading.Tasks;
 using paneleo.BL.Services.Interfaces;
+using paneleo.Share.BindingModels;
 using paneleo.Share.ModelsDto;
-using paneleo.Share.Models;
-using Microsoft.AspNetCore.Mvc;
-using paneleo.Share.BindingModels.Account;
-using paneleo.Share.ModelsDto.Account;
 
 namespace paneleo.BL.Services
 {
@@ -19,9 +12,9 @@ namespace paneleo.BL.Services
         {
         }
 
-        public async Task<Response<RegisterDto>> Login(LoginBindingModel loginModel)
+        public async Task<Response<LoginDto>> Login(LoginBindingModel loginModel)
         {
-            var result = new Response<RegisterDto>();
+            var result = new Response<LoginDto>();
 
             return result;
         }

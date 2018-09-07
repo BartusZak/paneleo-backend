@@ -24,4 +24,4 @@ namespace paneleo.Share.BindingModels
         public string Password { get; set; }
     }
 }
-}
+

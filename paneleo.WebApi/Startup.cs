@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using paneleo.BL.Services;
 using paneleo.BL.Services.Interfaces;
+using paneleo.Data.Data;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace paneleo.WebApi
@@ -29,11 +31,8 @@ namespace paneleo.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddAutoMapper();
+            services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddCors();
-
-            services.AddMvc();
             services.AddScoped<IAccountService, AccountService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -41,6 +40,10 @@ namespace paneleo.WebApi
             {
                 c.SwaggerDoc("v1", new Info { Title = "Paneleo API", Version = "v1" });
             });
+
+            services.AddCors();
+
+            services.AddMvc();
 
         }
 

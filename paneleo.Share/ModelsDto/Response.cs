@@ -4,7 +4,6 @@ using System.Text;
 
 namespace paneleo.Share.ModelsDto
 {
-
     public class Response<T> where T : DtoBaseModel
     {
         public T DtoObject { get; set; }
@@ -60,7 +59,5 @@ namespace paneleo.Share.ModelsDto
             ErrorForObjectToAdd.Add(errorKey, "");
             ErrorObjects.Add(new ErrorsDto { Model = Object, Errors = ErrorForObjectToAdd });
         }
-
     }
-
 }
