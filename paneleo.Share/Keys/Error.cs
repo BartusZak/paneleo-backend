@@ -10,5 +10,6 @@ namespace paneleo.Share.Keys
         public const string user_Login_Username_Length = "userLoginUsernameLengthError";
         public const string user_Login_Password_Required = "userLoginPasswordRequiredError";
         public const string user_Login_Password_Length = "userLoginPasswordLengthError";
+        public static string UserWrongLoginOrPassword = "Zły login lub hasło.";
     }
 }

@@ -4,17 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using paneleo.BL.Services;
 using paneleo.BL.Services.Interfaces;
 using paneleo.Data.Data;
+using paneleo.Share.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace paneleo.WebApi
@@ -33,7 +38,38 @@ namespace paneleo.WebApi
         {
             services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddIdentityCore<User>();
+            services.AddScoped<IUserStore<User>, UserOnlyStore<User, DataContext>>();
+            services.AddAuthentication("Identity.Application")
+                .AddCookie("Identity.Application");
+
+            services.ConfigureApplicationCookie(opt =>
+            {
+                opt.Events.OnRedirectToLogin = ctx =>
+                {
+                    if (ctx.Response.StatusCode == 200)
+                    {
+                        ctx.Response.StatusCode = 401;
+                        return Task.FromResult<object>(null);
+                    }
+                    return Task.CompletedTask;
+                };
+
+                opt.Events.OnRedirectToAccessDenied = ctx => {
+                    if (ctx.Response.StatusCode == 200)
+                    {
+                        ctx.Response.StatusCode = 403;
+                        return Task.FromResult<object>(null);
+                    }
+                    return Task.CompletedTask;
+                };
+
+                opt.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None;
+                opt.ExpireTimeSpan = TimeSpan.FromDays(1);
+            });
+
             services.AddScoped<IAccountService, AccountService>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -41,7 +77,7 @@ namespace paneleo.WebApi
                 c.SwaggerDoc("v1", new Info { Title = "Paneleo API", Version = "v1" });
             });
 
-            services.AddCors();
+            //services.AddCors();
 
             services.AddMvc();
 
@@ -59,11 +95,15 @@ namespace paneleo.WebApi
                 app.UseHsts();
             }
 
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
+            app.UseStaticFiles();
+
+            app.UseAuthentication();
+
+            //app.UseCors(x => x
+            //    .AllowAnyOrigin()
+            //    .AllowAnyMethod()
+            //    .AllowAnyHeader()
+            //    .AllowCredentials());
             //app.UseHttpsRedirection();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.

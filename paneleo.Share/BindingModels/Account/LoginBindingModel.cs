@@ -12,7 +12,7 @@ namespace paneleo.Share.BindingModels
 
         [Required(ErrorMessage = Error.user_Login_Username_Required)]
         [StringLength(50, ErrorMessage = Error.user_Login_Username_Length)]
-        public string Login
+        public string UserName
         {
             get { return _login; }
             set { _login = value.Trim(); }

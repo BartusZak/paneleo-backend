@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using paneleo.Share.BindingModels;
+using paneleo.Share.BindingModels.Account;
 using paneleo.Share.ModelsDto;
 
 namespace paneleo.BL.Services.Interfaces

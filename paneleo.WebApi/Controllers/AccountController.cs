@@ -1,12 +1,16 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using paneleo.BL.Services.Interfaces;
 using paneleo.Share.BindingModels;
+using paneleo.Share.BindingModels.Account;
 
 namespace paneleo.WebApi.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
@@ -17,7 +21,8 @@ namespace paneleo.WebApi.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody] LoginBindingModel loginModel)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginBindingModel loginModel)
         {
             var result = await _accountService.Login(loginModel);
 
@@ -30,7 +35,8 @@ namespace paneleo.WebApi.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody] RegisterBindingModel registerModel)
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(RegisterBindingModel registerModel)
         {
             var result = await _accountService.Register(registerModel);
 
